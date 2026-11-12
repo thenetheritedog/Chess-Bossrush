@@ -1,10 +1,27 @@
+
 using UnityEngine;
 
 public class Queen : PieceLogic
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
+
+
     public override void UsePiece()
     {
-        transform.position += transform.up;
+        base.UsePiece();
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (i != 0 || j != 0)
+                {
+                    base.Movement(i, j);
+                }
+            }
+        }
+        
     }
+
+    
+    
 }

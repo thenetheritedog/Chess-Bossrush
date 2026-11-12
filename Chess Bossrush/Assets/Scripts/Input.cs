@@ -3,7 +3,9 @@ using UnityEngine.InputSystem;
 
 public class Input : MonoBehaviour
 {
+
     PlayerScript player;
+    InputAction mouseAction;
     void Start()
     {
         player = GetComponent<PlayerScript>();
@@ -14,9 +16,17 @@ public class Input : MonoBehaviour
     {
         
     }
-
-    public void OnClick(InputAction inputVal)
+    
+    public void OnPoint(InputValue inputVal)
     {
-        player.FindPiece(inputVal.ReadValue<Vector2>());   
+        player.mousePos = inputVal.Get<Vector2>();
+
+    }
+
+    public void OnClick(InputValue inputVal)
+    {
+        if (inputVal.Get<float>() > 0.5f)
+            player.FindPiece();
+
     }
 }
