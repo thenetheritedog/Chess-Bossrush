@@ -15,13 +15,21 @@ public class BoardLogic : MonoBehaviour
         }
 
     }
-    public bool CheckIfValidMove(int xCord, int yCord)
+    public bool CheckIfValidMove(int xCord, int yCord, bool black)
     {
-
 
         if (xCord > 7 || yCord > 7 || xCord < 0 || yCord < 0)
             return false;
         GameObject lightUp = transform.GetChild(xCord + yCord * 8).gameObject;
+        if (boardState[xCord,yCord] != null)
+        {
+            if (boardState[xCord, yCord].black != black)
+                lightUp.GetComponent<Image>().color = Color.red;
+
+            return false;
+        }
+        
+        
         lightUp.GetComponent<Image>().color = Color.white;
         
         return true;

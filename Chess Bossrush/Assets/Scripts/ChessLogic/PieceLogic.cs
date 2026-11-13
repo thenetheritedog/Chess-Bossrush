@@ -3,7 +3,7 @@ using UnityEngine.ProBuilder.Shapes;
 
 public class PieceLogic : MonoBehaviour
 {
-    [SerializeField] protected bool black;
+    public bool black;
     protected BoardLogic boardLogic;
     
     int xBase;
@@ -41,7 +41,7 @@ public class PieceLogic : MonoBehaviour
         if (xMove == 0 && yMove == 0)
             return;
 
-        while (boardLogic.CheckIfValidMove(x, y))
+        while (boardLogic.CheckIfValidMove(x, y, black))
         {
             x += xMove;
             y += yMove;
@@ -55,6 +55,8 @@ public class PieceLogic : MonoBehaviour
         boardLogic.boardState[xBase, yBase] = null;
         xBase = (int)pos.x + 4;
         yBase = (int)pos.z + 4;
+        if (boardLogic.boardState[xBase, yBase] != null)
+            Destroy(boardLogic.boardState[xBase, yBase].gameObject);
         boardLogic.boardState[xBase, yBase] = this;
         pos *= 3f / 8f;
         pos.x += 3f / 16f;

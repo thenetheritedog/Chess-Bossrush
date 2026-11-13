@@ -19,7 +19,11 @@ public class PlayerScript : MonoBehaviour
                     pieceUsing = hit.collider.GetComponent<PieceLogic>();
                     pieceUsing.UsePiece();
                 }
-                else { pieceUsing = null; }
+                else 
+                { 
+                    pieceUsing = null; 
+                    board.RemoveAllLitUpSquares();
+                }
 
             }
             else
@@ -27,6 +31,7 @@ public class PlayerScript : MonoBehaviour
                 if (pieceUsing != null)
                     board.MovePiece(pieceUsing, hit.point);
                 pieceUsing = null;
+                board.RemoveAllLitUpSquares();
             }
         }
     }
