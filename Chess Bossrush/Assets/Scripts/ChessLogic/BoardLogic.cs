@@ -37,4 +37,21 @@ public class BoardLogic : MonoBehaviour
 
         }
     }
+
+    public void MovePiece(PieceLogic piece, Vector3 pos)
+    {
+        Vector3 localPos = pos - transform.position;
+        localPos.x = Mathf.Floor(localPos.x * 8 / 3);
+        localPos.z = Mathf.Floor(localPos.z * 8 / 3);
+        GameObject lightUp = transform.GetChild((int)localPos.x + 4 + ((int)localPos.z +4) * 8).gameObject;
+        if (lightUp.GetComponent<Image>().color != Color.clear)
+        {
+            piece.UpdatePos(localPos);
+            RemoveAllLitUpSquares();
+        }
+        else
+        {
+            RemoveAllLitUpSquares();
+        }
+    }
 }

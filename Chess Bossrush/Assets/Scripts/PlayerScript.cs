@@ -8,23 +8,26 @@ public class PlayerScript : MonoBehaviour
 
     public void FindPiece()
     {
-        
-        Physics.Raycast(Camera.main.ScreenPointToRay(mousePos), out RaycastHit hit);
-        Debug.DrawRay(Camera.main.ScreenPointToRay(mousePos).origin,Camera.main.ScreenPointToRay(mousePos).direction, color:Color.red, 5f);
-        if (hit.collider.GetComponent<PieceLogic>() != null)
+
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(mousePos), out RaycastHit hit, 5f))
         {
-            if (pieceUsing != hit.collider.GetComponent<PieceLogic>())
+            if (hit.collider.GetComponent<PieceLogic>() != null)
             {
-                pieceUsing = hit.collider.GetComponent<PieceLogic>();
-                pieceUsing.UsePiece();
+                if (pieceUsing != hit.collider.GetComponent<PieceLogic>())
+                {
+                    pieceUsing = hit.collider.GetComponent<PieceLogic>();
+                    pieceUsing.UsePiece();
+                }
+                else { pieceUsing = null; }
+
             }
-            else { pieceUsing = null; }
-            
+            else
+            {
+                if (pieceUsing != null)
+                    board.MovePiece(pieceUsing, hit.point);
+                pieceUsing = null;
+            }
         }
-        else
-        {
-            pieceUsing = null;
-        }
-        
     }
 }
