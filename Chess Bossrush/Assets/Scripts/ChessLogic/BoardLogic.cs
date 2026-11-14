@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class BoardLogic : MonoBehaviour
 {
     public PieceLogic[,] boardState = new PieceLogic[8, 8];
+    public King whiteKing;
+    public King blackKing;
     [SerializeField] GameObject litSquareInst;
 
     private void Start()
@@ -13,13 +15,35 @@ public class BoardLogic : MonoBehaviour
         {
             Instantiate(litSquareInst, transform);
         }
+        King[] kings = FindObjectsByType<King>(FindObjectsSortMode.InstanceID);
+        foreach (King king in kings) 
+        {
+            if (king.black)
+            {
+                blackKing = king;
+            }
+            else
+            {
+                whiteKing = king;
+            }
+        }
 
     }
-    public bool CheckIfValidMove(int xCord, int yCord, bool black)
+    public bool CheckIfValidMove(int xCord, int yCord, bool black, PieceLogic piece)
     {
 
         if (xCord > 7 || yCord > 7 || xCord < 0 || yCord < 0)
             return false;
+        PieceLogic[,] newPos = boardState;
+        newPos[piece.xBase, piece.yBase] = null;
+        newPos[xCord, yCord] = piece;
+        if (black)
+        {
+            if (blackKing.CheckKingDanger(newPos)) { return true; }
+        }
+        else if (whiteKing.CheckKingDanger(newPos)) { return true; }
+            
+
         GameObject lightUp = transform.GetChild(xCord + yCord * 8).gameObject;
         if (boardState[xCord,yCord] != null)
         {
@@ -28,6 +52,7 @@ public class BoardLogic : MonoBehaviour
 
             return false;
         }
+        
         
         
         lightUp.GetComponent<Image>().color = Color.white;

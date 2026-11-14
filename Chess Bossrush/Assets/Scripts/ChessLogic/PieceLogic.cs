@@ -6,8 +6,8 @@ public class PieceLogic : MonoBehaviour
     public bool black;
     protected BoardLogic boardLogic;
     
-    int xBase;
-    int yBase;
+    public int xBase;
+    public int yBase;
 
     private void Start()
     {
@@ -41,7 +41,7 @@ public class PieceLogic : MonoBehaviour
         if (xMove == 0 && yMove == 0)
             return;
 
-        while (boardLogic.CheckIfValidMove(x, y, black))
+        while (boardLogic.CheckIfValidMove(x, y, black, this))
         {
             x += xMove;
             y += yMove;
