@@ -26,6 +26,10 @@ public class PlayerScript : MonoBehaviour
                 }
 
             }
+            else if (hit.collider.GetComponent<SelectUpgrade>() != null)
+            {
+                hit.collider.GetComponent<SelectUpgrade>().ClickOnUpgrade();
+            }
             else
             {
                 if (pieceUsing != null)

@@ -4,13 +4,14 @@ using UnityEngine.ProBuilder.Shapes;
 public class PieceLogic : MonoBehaviour
 {
     public bool black;
-    protected BoardLogic boardLogic;
+    [SerializeField] protected BoardLogic boardLogic;
     
     public int xBase;
     public int yBase;
 
-    private void Start()
+    void Start()
     {
+
         boardLogic = FindAnyObjectByType<BoardLogic>();
 
         Vector3 pos = transform.localPosition;
@@ -21,10 +22,9 @@ public class PieceLogic : MonoBehaviour
         xBase += 4;
         yBase = (int)pos.z;
         yBase += 4;
-        boardLogic.boardState[xBase, yBase] = this;
+        boardLogic.boardState[xBase + yBase * 8] = this;
         pos *= 3f / 8f;
-        pos.x += 3f / 16f;
-        pos.z += 3f / 16f;
+        pos += Vector3.one * 3f / 16f;
         pos.y = 0.15f;
         transform.localPosition = pos;
         Debug.Log($"{xBase},{yBase}");
@@ -32,7 +32,6 @@ public class PieceLogic : MonoBehaviour
     public virtual void UsePiece()
     {
         boardLogic.RemoveAllLitUpSquares();
-        
     }
     protected virtual void Movement(int xMove, int yMove)
     {
@@ -41,27 +40,24 @@ public class PieceLogic : MonoBehaviour
         if (xMove == 0 && yMove == 0)
             return;
 
-        while (boardLogic.CheckIfValidMove(x, y, black, this))
+        while (boardLogic.CheckIfValidMove(x, y, this))
         {
             x += xMove;
             y += yMove;
-
         }
         
     }
 
-    public void UpdatePos(Vector3 pos)
+    public virtual void UpdatePos(Vector3 pos)
     {
-        boardLogic.boardState[xBase, yBase] = null;
+        boardLogic.boardState[xBase + yBase * 8] = null;
         xBase = (int)pos.x + 4;
         yBase = (int)pos.z + 4;
-        if (boardLogic.boardState[xBase, yBase] != null)
-            Destroy(boardLogic.boardState[xBase, yBase].gameObject);
-        boardLogic.boardState[xBase, yBase] = this;
-        pos *= 3f / 8f;
-        pos.x += 3f / 16f;
-        pos.z += 3f / 16f;
-        pos.y = 0.15f;
-        transform.localPosition = pos;
+        if (boardLogic.boardState[xBase + yBase * 8] != null)
+            Destroy(boardLogic.boardState[xBase + yBase * 8].gameObject);
+        boardLogic.boardState[xBase + yBase * 8] = this;
+        pos = boardLogic.transform.GetChild(xBase + yBase * 8).position;
+        pos.y += 0.15f;
+        transform.position = pos;
     }
 }
