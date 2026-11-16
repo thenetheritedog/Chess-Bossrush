@@ -16,16 +16,18 @@ public class PieceLogic : MonoBehaviour
 
         Vector3 pos = transform.localPosition;
         pos.x = Mathf.Floor(transform.localPosition.x * 8 / 3);
-        pos.z = Mathf.Floor(transform.localPosition.z * 8 / 3);
+        pos.y = Mathf.Floor(transform.localPosition.y * 8 / 3);
 
         xBase = (int)pos.x;
         xBase += 4;
-        yBase = (int)pos.z;
+        yBase = (int)pos.y;
         yBase += 4;
         boardLogic.boardState[xBase + yBase * 8] = this;
+        if (yBase > 3)
+            black = true;
         pos *= 3f / 8f;
         pos += Vector3.one * 3f / 16f;
-        pos.y = 0.15f;
+        pos.z = 0;
         transform.localPosition = pos;
         Debug.Log($"{xBase},{yBase}");
     }
@@ -56,8 +58,6 @@ public class PieceLogic : MonoBehaviour
         if (boardLogic.boardState[xBase + yBase * 8] != null)
             Destroy(boardLogic.boardState[xBase + yBase * 8].gameObject);
         boardLogic.boardState[xBase + yBase * 8] = this;
-        pos = boardLogic.transform.GetChild(xBase + yBase * 8).position;
-        pos.y += 0.15f;
-        transform.position = pos;
+        transform.position = boardLogic.transform.GetChild(xBase + yBase * 8).position;
     }
 }

@@ -5,17 +5,14 @@ public class Input : MonoBehaviour
 {
 
     PlayerScript player;
-    InputAction mouseAction;
+    BoardLogic boardLogic;
     void Start()
     {
         player = GetComponent<PlayerScript>();
+        boardLogic = FindAnyObjectByType<BoardLogic>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
     public void OnPoint(InputValue inputVal)
     {
@@ -28,5 +25,10 @@ public class Input : MonoBehaviour
         if (inputVal.Get<float>() > 0.5f)
             player.FindPiece();
 
+    }
+
+    public void OnJump(InputValue inputVal)
+    {
+        boardLogic.EndGame();
     }
 }

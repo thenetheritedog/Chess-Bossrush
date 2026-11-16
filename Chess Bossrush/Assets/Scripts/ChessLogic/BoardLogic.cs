@@ -2,7 +2,9 @@
 using System.Collections;
 
 using System.Xml.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditor.PlayerSettings;
 
@@ -14,6 +16,8 @@ public class BoardLogic : MonoBehaviour
 
     [SerializeField] GameObject litSquareInst;
     [SerializeField] GameObject upgradeShow;
+    [SerializeField] Canvas endGameScreen;
+    [SerializeField] TextMeshPro winText;
 
     bool blackTurn = false;
     bool checkForLegalMoves;
@@ -23,7 +27,7 @@ public class BoardLogic : MonoBehaviour
 
     Vector3 upgradeShowDefaultPlace;
 
-    private void Awake()
+    private void Start()
     {
         for (int i = 0; i < 64; i++)
         {
@@ -154,15 +158,22 @@ public class BoardLogic : MonoBehaviour
             EndGame();
     }
 
-    void EndGame()
+    public void EndGame()
     {
-        if (whiteKing.CheckKingDanger(boardState) || blackKing.CheckKingDanger(boardState))
+        if (whiteKing.CheckKingDanger(boardState))
         {
-            Debug.Log("Someone lost idk");
+            endGameScreen.enabled = true;
+            winText.text = "Black wins!";
+        }
+        else if (blackKing.CheckKingDanger(boardState))
+        {
+            endGameScreen.enabled = true;
+            winText.text = "White wins!";
         }
         else
         {
-            Debug.Log("BOOOOO ITS A DRAW");
+            endGameScreen.enabled = true;
+            winText.text = "In war, whichever side may call itself the victor, there are no winners, but all are losers.\r\nNeville Chamberlain";
         }
     }
 
@@ -181,5 +192,11 @@ public class BoardLogic : MonoBehaviour
         pieceUpg.black = yUpgrade == 0 ? true : false;
         upgradeShow.transform.position = upgradeShowDefaultPlace - Vector3.right * 10;
         blackTurn = !blackTurn;
+    }
+
+
+    public static void RematchGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

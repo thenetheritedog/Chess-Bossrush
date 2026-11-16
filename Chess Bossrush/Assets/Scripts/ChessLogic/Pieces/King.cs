@@ -42,6 +42,7 @@ public class King : PieceLogic
 
     void CastleCheck()
     {
+
         if (boardLogic.boardState[yBase * 8] is Rook rook)
         {
             if (!rook.hasMoved)
