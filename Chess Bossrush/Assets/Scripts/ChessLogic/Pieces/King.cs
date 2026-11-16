@@ -7,6 +7,7 @@ public class King : PieceLogic
 {
     int kingMovedX;
     int kingMovedY;
+    bool hasMoved = false;
 
     public override void UsePiece()
     {
@@ -33,8 +34,30 @@ public class King : PieceLogic
         if (xMove == 0 && yMove == 0)
             return;
 
-        boardLogic.CheckIfValidMove(x, y, this);
+        if (boardLogic.CheckIfValidMove(x, y, this) && !hasMoved && yMove == 0)
+        {
+            CastleCheck();
+        }
+    }
 
+    void CastleCheck()
+    {
+        if (boardLogic.boardState[yBase * 8] is Rook rook)
+        {
+            if (!rook.hasMoved)
+            {
+                kingMovedX = 2;
+                boardLogic.CheckIfValidMove(kingMovedX, yBase, this);
+            }
+        }
+        if (boardLogic.boardState[7 +yBase * 8] is Rook rook2)
+        {
+            if (!rook2.hasMoved)
+            {
+                kingMovedX = 6;
+                boardLogic.CheckIfValidMove(kingMovedX, yBase, this);
+            }
+        }
     }
 
 
@@ -118,5 +141,18 @@ public class King : PieceLogic
     {
         kingMovedX = xBase;
         kingMovedY = yBase;
+    }
+
+    public override void UpdatePos(Vector3 pos)
+    {
+        base.UpdatePos(pos);
+        if (!hasMoved && Mathf.Abs(4-xBase) > 1)
+        {
+            if (xBase < 4)
+                boardLogic.boardState[yBase * 8].UpdatePos(new Vector3(-1,0, yBase - 4));
+            
+            else
+                boardLogic.boardState[7 + yBase * 8].UpdatePos(new Vector3(1, 0, yBase - 4));
+        }
     }
 }

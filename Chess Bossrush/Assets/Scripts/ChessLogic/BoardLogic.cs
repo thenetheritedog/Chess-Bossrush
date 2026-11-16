@@ -42,11 +42,12 @@ public class BoardLogic : MonoBehaviour
             }
         }
         upgradeShowDefaultPlace = upgradeShow.transform.position;
-        upgradeShow.transform.position = upgradeShowDefaultPlace - Vector3.left * 10;
+        upgradeShow.transform.position = upgradeShowDefaultPlace + Vector3.left * 10;
 
     }
     public bool CheckIfValidMove(int xCord, int yCord, PieceLogic piece)
     {
+        upgradeShow.transform.position = upgradeShowDefaultPlace + Vector3.left * 10;
         if (piece != whiteKing)
             whiteKing.ResetKingPos();
         if (piece != blackKing)
@@ -106,7 +107,6 @@ public class BoardLogic : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.GetComponent<Image>().color = Color.clear;
-            upgradeShow.transform.position = upgradeShowDefaultPlace - Vector3.left * 10;
         }
     }
 
@@ -122,6 +122,8 @@ public class BoardLogic : MonoBehaviour
         {
             if (piece is Pawn && (localPos.z == 3 || localPos.z == -4))
             {
+                yUpgrade = (int)localPos.z + 4;
+                xUpgrade = (int)localPos.x + 4;
                 upgradeShow.transform.position = upgradeShowDefaultPlace;
                 return;
             }
@@ -178,5 +180,6 @@ public class BoardLogic : MonoBehaviour
         pieceUpg.transform.position += 0.15f * Vector3.up;
         pieceUpg.black = yUpgrade == 0 ? true : false;
         upgradeShow.transform.position = upgradeShowDefaultPlace - Vector3.right * 10;
+        blackTurn = !blackTurn;
     }
 }

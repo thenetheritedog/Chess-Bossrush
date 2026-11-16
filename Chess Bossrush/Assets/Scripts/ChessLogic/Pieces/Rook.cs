@@ -1,9 +1,10 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rook : PieceLogic
 {
-
+    public bool hasMoved = false;
 
 
     public override void UsePiece()
@@ -17,6 +18,10 @@ public class Rook : PieceLogic
 
     }
 
-    
-    
+
+    public override void UpdatePos(Vector3 pos)
+    {
+        base.UpdatePos(pos);
+        hasMoved = true;
+    }
 }
