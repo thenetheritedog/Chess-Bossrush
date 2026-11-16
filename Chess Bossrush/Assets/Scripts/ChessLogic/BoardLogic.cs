@@ -17,7 +17,7 @@ public class BoardLogic : MonoBehaviour
     [SerializeField] GameObject litSquareInst;
     [SerializeField] GameObject upgradeShow;
     [SerializeField] Canvas endGameScreen;
-    [SerializeField] TextMeshPro winText;
+    [SerializeField] TextMeshProUGUI winText;
 
     bool blackTurn = false;
     bool checkForLegalMoves;
@@ -173,7 +173,7 @@ public class BoardLogic : MonoBehaviour
         else
         {
             endGameScreen.enabled = true;
-            winText.text = "In war, whichever side may call itself the victor, there are no winners, but all are losers.\r\nNeville Chamberlain";
+            winText.text = "Stalemate";
         }
     }
 
