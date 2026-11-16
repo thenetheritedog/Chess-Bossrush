@@ -22,14 +22,15 @@ public class PieceLogic : MonoBehaviour
         xBase += 4;
         yBase = (int)pos.y;
         yBase += 4;
-        boardLogic.boardState[xBase + yBase * 8] = this;
-        if (yBase > 3)
+        if (GetComponent<Renderer>().material.color.r < 0.5f)
             black = true;
+
+        boardLogic.boardState[xBase + yBase * 8] = this;
+        
         pos *= 3f / 8f;
         pos += Vector3.one * 3f / 16f;
         pos.z = 0;
         transform.localPosition = pos;
-        Debug.Log($"{xBase},{yBase}");
     }
     public virtual void UsePiece()
     {

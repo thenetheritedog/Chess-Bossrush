@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class BoardLogic : MonoBehaviour
 {
@@ -24,6 +23,7 @@ public class BoardLogic : MonoBehaviour
 
     int xUpgrade;
     int yUpgrade;
+    int xKillPawn;
 
     Vector3 upgradeShowDefaultPlace;
 
@@ -128,6 +128,7 @@ public class BoardLogic : MonoBehaviour
             {
                 yUpgrade = (int)localPos.z + 4;
                 xUpgrade = (int)localPos.x + 4;
+                xKillPawn = piece.xBase;
                 upgradeShow.transform.position = upgradeShowDefaultPlace;
                 return;
             }
@@ -177,21 +178,30 @@ public class BoardLogic : MonoBehaviour
         }
     }
 
-    
+
 
     public void SetupNewPiece(PieceLogic prefab)
     {
+        Material material;
         if (yUpgrade == 0)
-            Destroy(boardState[xUpgrade + 8].gameObject);
-        else
-            Destroy(boardState[xUpgrade + 48].gameObject);
+        {
+            material = boardState[xKillPawn + 8].GetComponent<Renderer>().material;
+            Destroy(boardState[xKillPawn + 8].gameObject);
+        }
+        else 
+        {
+            material = boardState[xKillPawn + 48].GetComponent<Renderer>().material;
+            Destroy(boardState[xKillPawn + 48].gameObject);
+        }
+        if (boardState[xUpgrade + yUpgrade * 8] != null)
+            Destroy(boardState[xUpgrade + yUpgrade * 8].gameObject);
         PieceLogic pieceUpg = Instantiate(prefab);
-        pieceUpg.transform.parent = transform.parent.parent;
+        pieceUpg.transform.parent = transform.parent;
         pieceUpg.transform.position = transform.GetChild(xUpgrade + yUpgrade * 8).position;
-        pieceUpg.transform.position += 0.15f * Vector3.up;
-        pieceUpg.black = yUpgrade == 0 ? true : false;
+        pieceUpg.GetComponent<Renderer>().material = material;
         upgradeShow.transform.position = upgradeShowDefaultPlace - Vector3.right * 10;
         blackTurn = !blackTurn;
+
     }
 
 
