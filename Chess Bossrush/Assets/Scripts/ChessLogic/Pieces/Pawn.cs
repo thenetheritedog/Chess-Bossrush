@@ -48,5 +48,8 @@ public class Pawn : PieceLogic
             boardLogic.boardState[xBase + (yBase - moveForward) * 8] = this;
         }
     }
-
+    public override bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)
+    {
+        return oneAway && blackPiece != black && yMove == -moveForward && xMove != 0;
+    }
 }

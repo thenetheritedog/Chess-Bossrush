@@ -61,4 +61,10 @@ public class PieceLogic : MonoBehaviour
         boardLogic.boardState[xBase + yBase * 8] = this;
         transform.position = boardLogic.transform.GetChild(xBase + yBase * 8).position;
     }
+
+    public virtual bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)
+    {
+
+        return false;
+    }
 }

@@ -24,6 +24,9 @@ public class Queen : PieceLogic
         
     }
 
-    
-    
+    public override bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)
+    {
+        return blackPiece != black && Mathf.Abs(xMove) + Mathf.Abs(yMove) < 3;
+    }
+
 }

@@ -42,7 +42,10 @@ public class King : PieceLogic
 
     void CastleCheck()
     {
-
+        kingMovedX = xBase;
+        kingMovedY = yBase;
+        if (CheckKingDanger(boardLogic.boardState))
+            return;
         if (boardLogic.boardState[yBase * 8] is Rook rook)
         {
             if (!rook.hasMoved)
@@ -97,9 +100,8 @@ public class King : PieceLogic
         int yPos = kingMovedY + yMove;
 
         bool hitValid = false;
-        bool diagonal = Mathf.Abs(xMove) == Mathf.Abs(yMove);
-        bool straight = Mathf.Abs(xMove) != Mathf.Abs(yMove);
-        bool knight = Mathf.Abs(xMove) > 1 || Mathf.Abs(yMove) > 1;
+        bool moved1Square = Mathf.Abs(xMove) + Mathf.Abs(yMove) < 3;
+        
         PieceLogic pieceHit = null;
 
         while (!hitValid && !(xPos > 7 || yPos > 7 || xPos < 0 || yPos < 0))
@@ -109,32 +111,20 @@ public class King : PieceLogic
                 hitValid = true;
                 pieceHit = pieces[xPos + yPos * 8];
             }
-            else if (knight)
+            else if (Mathf.Abs(xMove) + Mathf.Abs(yMove) > 2)
                 break;
             else
             {
+                moved1Square = false;
                 xPos += xMove;
                 yPos += yMove;
             }
 
         }
 
-        bool moved1Square = xPos == kingMovedX + xMove && yPos == kingMovedY + yMove;
 
-        if ((diagonal || straight) && hitValid && moved1Square && pieceHit is King)
-            return true;
-        if (diagonal && hitValid && pieceHit is Pawn && moved1Square)
-        {
-            int pawnAttack = pieceHit.yBase;
-            pawnAttack += pieceHit.black ? -1 : 1;
-            return pieceHit.black != black && pawnAttack == kingMovedY;
-        }
-        else if (diagonal && hitValid && (pieceHit is Queen || pieceHit is Bishop))
-            return pieceHit.black != black;
-        else if (straight && hitValid && (pieceHit is Queen || pieceHit is Rook))
-            return pieceHit.black != black;
-        else if (knight && hitValid && pieceHit is Knight)
-            return pieceHit.black != black;
+        if (hitValid)
+            return pieceHit.CanCheck(xMove,yMove,moved1Square,black);
         return false;
     }
 
@@ -155,5 +145,10 @@ public class King : PieceLogic
             else
                 boardLogic.boardState[7 + yBase * 8].UpdatePos(new Vector3(1, 0, yBase - 4));
         }
+    }
+
+    public override bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)
+    {
+        return oneAway && blackPiece != black;
     }
 }

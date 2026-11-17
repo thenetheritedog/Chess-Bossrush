@@ -18,6 +18,9 @@ public class Bishop : PieceLogic
         
     }
 
-    
-    
+    public override bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)
+    {
+        return blackPiece != black && Mathf.Abs(xMove) + Mathf.Abs(yMove) == 2;
+    }
+
 }

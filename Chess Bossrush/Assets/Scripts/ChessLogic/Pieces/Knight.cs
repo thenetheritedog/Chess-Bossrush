@@ -30,4 +30,8 @@ public class Knight : PieceLogic
         boardLogic.CheckIfValidMove(x, y, this);
 
     }
+    public override bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)
+    {
+        return blackPiece != black && Mathf.Abs(xMove) + Mathf.Abs(yMove) > 2;
+    }
 }

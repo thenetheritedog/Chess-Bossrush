@@ -24,4 +24,9 @@ public class Rook : PieceLogic
         base.UpdatePos(pos);
         hasMoved = true;
     }
+    public override bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)
+    {
+        return blackPiece != black && (xMove == 0 || yMove == 0);
+    }
+
 }
