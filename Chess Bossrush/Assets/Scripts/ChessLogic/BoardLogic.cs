@@ -9,7 +9,10 @@ using UnityEngine.UI;
 
 public class BoardLogic : MonoBehaviour
 {
+    public string enPassentFEN = " -";
+
     public PieceLogic[] boardState = new PieceLogic[64];
+
     public King whiteKing;
     public King blackKing;
 
@@ -24,6 +27,8 @@ public class BoardLogic : MonoBehaviour
     int xUpgrade;
     int yUpgrade;
     int xKillPawn;
+    int moveCount=0;
+    int pawnlessAndNoTakingCount=0;
 
     Vector3 upgradeShowDefaultPlace;
 
@@ -133,6 +138,12 @@ public class BoardLogic : MonoBehaviour
                 return;
             }
             piece.UpdatePos(localPos);
+            if (blackTurn)
+                moveCount++;
+            if (piece is Pawn || boardState[(int)localPos.x + 4 + ((int)localPos.z + 4) * 8] != null)
+                pawnlessAndNoTakingCount=0;
+            else
+                pawnlessAndNoTakingCount++;
             blackTurn = !blackTurn;
             RemoveAllLitUpSquares();
             MoveCheckAfterTurn();
@@ -201,12 +212,66 @@ public class BoardLogic : MonoBehaviour
         pieceUpg.GetComponent<Renderer>().material = material;
         upgradeShow.transform.position = upgradeShowDefaultPlace - Vector3.right * 10;
         blackTurn = !blackTurn;
+        enPassentFEN = " -";
 
     }
-
-
     public static void RematchGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+
+    public void FlipBoardToFEN()
+    {
+        int xEmpty = 0;
+        string relayFEN = string.Empty;
+        for (int i = 7; i >= 0; i--)
+        {
+            for (int j = 0; j <= 7; j++)
+            {
+                if (boardState[j + i * 8] != null)
+                {
+                    if (boardState[j + i * 8].yBase == i)
+                    {
+                        if (xEmpty != 0)
+                            relayFEN += xEmpty;
+                        relayFEN += boardState[j + i * 8].gameObject.name;
+                        xEmpty = 0;
+                    }
+                    else
+                        xEmpty++;
+                }
+                else xEmpty++;
+            }
+            if (xEmpty != 0)
+                relayFEN += xEmpty;
+            relayFEN += "/";
+            xEmpty = 0;
+        }
+        if (blackTurn)
+            relayFEN += " b ";
+        else
+            relayFEN += " w ";
+        if (!whiteKing.hasMoved)
+        {
+            if (boardState[7] is Rook rook)
+                if (!rook.hasMoved)
+                    relayFEN += "K";
+            if (boardState[0] is Rook rook2)
+                if (!rook2.hasMoved)
+                    relayFEN += "Q";
+        }
+        if (!blackKing.hasMoved)
+        {
+            if (boardState[63] is Rook rook)
+                if (!rook.hasMoved)
+                    relayFEN += "k";
+            if (boardState[56] is Rook rook2)
+                if (!rook2.hasMoved)
+                    relayFEN += "q";
+        }
+        relayFEN += enPassentFEN;
+        relayFEN += $" {pawnlessAndNoTakingCount} {moveCount}";
+        Debug.Log(relayFEN);
     }
 }

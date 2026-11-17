@@ -31,4 +31,9 @@ public class Input : MonoBehaviour
     {
         boardLogic.EndGame();
     }
+
+    public void OnInteract(InputValue inputVal)
+    {
+        boardLogic.FlipBoardToFEN();
+    }
 }

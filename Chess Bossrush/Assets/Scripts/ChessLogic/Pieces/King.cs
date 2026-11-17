@@ -7,7 +7,7 @@ public class King : PieceLogic
 {
     int kingMovedX;
     int kingMovedY;
-    bool hasMoved = false;
+    public bool hasMoved = false;
 
     public override void UsePiece()
     {

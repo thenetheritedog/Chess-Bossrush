@@ -46,6 +46,7 @@ public class Pawn : PieceLogic
         if (Mathf.Abs(yBaseOld - yBase) == 2)
         {
             boardLogic.boardState[xBase + (yBase - moveForward) * 8] = this;
+            boardLogic.enPassentFEN = $" {(char)(xBase + 97)}{yBase - moveForward + 1}";
         }
     }
     public override bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)

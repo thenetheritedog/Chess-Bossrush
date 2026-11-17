@@ -5,7 +5,7 @@ public class PieceLogic : MonoBehaviour
 {
     public bool black;
     [SerializeField] protected BoardLogic boardLogic;
-    
+
     public int xBase;
     public int yBase;
 
@@ -22,11 +22,15 @@ public class PieceLogic : MonoBehaviour
         xBase += 4;
         yBase = (int)pos.y;
         yBase += 4;
+        gameObject.name = gameObject.name[0].ToString();
         if (GetComponent<Renderer>().material.color.r < 0.5f)
+        {
             black = true;
+            gameObject.name = gameObject.name.ToLower();
+        }
 
         boardLogic.boardState[xBase + yBase * 8] = this;
-        
+
         pos *= 3f / 8f;
         pos += Vector3.one * 3f / 16f;
         pos.z = 0;
@@ -48,11 +52,12 @@ public class PieceLogic : MonoBehaviour
             x += xMove;
             y += yMove;
         }
-        
+
     }
 
     public virtual void UpdatePos(Vector3 pos)
     {
+        boardLogic.enPassentFEN = " -";
         boardLogic.boardState[xBase + yBase * 8] = null;
         xBase = (int)pos.x + 4;
         yBase = (int)pos.z + 4;

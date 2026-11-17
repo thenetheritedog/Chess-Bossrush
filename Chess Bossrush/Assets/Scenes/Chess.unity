@@ -4208,6 +4208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29766f3165992e4483380b0779b2baf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enPassentFEN: ' -'
   boardState:
   - {fileID: 0}
   - {fileID: 0}
