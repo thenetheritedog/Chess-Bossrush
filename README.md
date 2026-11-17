@@ -7,3 +7,5 @@ Only has chess board and chess mechanics
 Will add stock fish and fighting gameplay
 Will add progression
 Will add timer
+# History
+Started by me as a passion project after my first attempt at a combat game failed. Inspired by Gotham chess thumbnails and the idea of creating a game so insane that it is really funny. Will probably continue this for at least a few weeks.
