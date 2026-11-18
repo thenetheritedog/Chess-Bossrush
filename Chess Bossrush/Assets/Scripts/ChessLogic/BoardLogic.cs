@@ -74,10 +74,10 @@ public class BoardLogic : MonoBehaviour
         if (piece.black)
         {
             if (blackKing.CheckKingDanger(newPos))
-            { kingNotInDanger = false; }
+                kingNotInDanger = false; 
         }
         else if (whiteKing.CheckKingDanger(newPos))
-        { kingNotInDanger = false; }
+            kingNotInDanger = false; 
 
 
         GameObject lightUp = transform.GetChild(xCord + yCord * 8).gameObject;
@@ -248,10 +248,8 @@ public class BoardLogic : MonoBehaviour
             relayFEN += "/";
             xEmpty = 0;
         }
-        if (blackTurn)
-            relayFEN += " b ";
-        else
-            relayFEN += " w ";
+        
+        relayFEN += blackTurn ? " b " : " w ";
         if (!whiteKing.hasMoved)
         {
             if (boardState[7] is Rook rook)
@@ -274,4 +272,5 @@ public class BoardLogic : MonoBehaviour
         relayFEN += $" {pawnlessAndNoTakingCount} {moveCount}";
         Debug.Log(relayFEN);
     }
+    
 }
