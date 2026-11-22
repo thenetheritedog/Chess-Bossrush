@@ -1,4 +1,6 @@
 # Chess Bossrush
+<img width="872" height="654" alt="image" src="https://github.com/user-attachments/assets/12093bfe-4eb4-47c8-8455-1dfc5415334d" />
+
 # About
 Chessboxing game where you fight more and more intense opponents. Fighting involves sekiro like mechanics
 # Current
