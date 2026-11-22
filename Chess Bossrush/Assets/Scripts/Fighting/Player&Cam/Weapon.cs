@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         player = FindAnyObjectByType<FighterPlayerManager>();
+        attackCollider = GetComponent<Collider>();
         TurnOffCollider();
     }
 

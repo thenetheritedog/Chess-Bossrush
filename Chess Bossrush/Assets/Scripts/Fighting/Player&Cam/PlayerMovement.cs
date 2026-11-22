@@ -41,7 +41,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (playerMan.anim.rootAnimPlaying)
             {
-                vel = playerMan.anim.animator.deltaPosition /Time.deltaTime;
+                vel = playerMan.anim.transform.localPosition /Time.deltaTime;
+                vel = transform.rotation * vel;
                 vel = Vector3.ProjectOnPlane(vel, groundHit.normal).normalized * vel.magnitude;
                 rb.linearVelocity = vel;
                 return;
@@ -49,14 +50,14 @@ public class PlayerMovement : MonoBehaviour
             if (dirOfPlayerInput.magnitude > 0)
                 transform.forward = Vector3.ProjectOnPlane(dirOfPlayerInput,Vector3.up);
             dirOfPlayerInput = Vector3.ProjectOnPlane(dirOfPlayerInput, groundHit.normal);
-            vel += dirOfPlayerInput.normalized * acceleration * (1-dirOfPlayerInput.y) * Time.deltaTime;
-            vel -= vel * friction * Time.deltaTime;
+            vel +=  acceleration * Time.deltaTime * dirOfPlayerInput.normalized;
+            vel -= friction * Time.deltaTime * vel;
             vel = Vector3.ProjectOnPlane(vel,groundHit.normal);
             
             if (vel.magnitude < 1 && dirOfPlayerInput.magnitude == 0)
                 vel *= 0;
 
-            playerMan.anim.animator.SetFloat("speed", vel.magnitude/10); 
+            playerMan.anim.animator.SetFloat("speed", vel.magnitude); 
         }
         else
         {
@@ -88,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GroundCheck() && !playerMan.anim.rootAnimPlaying)
         {
-            rb.linearVelocity += Vector3.up * 15f;
+            rb.linearVelocity += Vector3.up * 5f;
             grounded = false;
         }
     }

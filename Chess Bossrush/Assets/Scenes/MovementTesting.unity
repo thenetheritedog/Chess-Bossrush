@@ -903,6 +903,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2200191305265109441, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200191305265109441, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200191305265109441, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4897398252100387995, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
