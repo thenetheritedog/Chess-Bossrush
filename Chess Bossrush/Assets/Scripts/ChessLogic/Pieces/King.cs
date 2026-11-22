@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using UnityEngine.UI;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class King : PieceLogic
 {
@@ -9,6 +10,14 @@ public class King : PieceLogic
     int kingMovedY;
     public bool hasMoved = false;
 
+    protected override void Start()
+    {
+        base.Start();
+        if (black)
+            boardLogic.blackKing = this;
+        else
+            boardLogic.whiteKing = this;
+    }
     public override void UsePiece()
     {
         base.UsePiece();
@@ -106,7 +115,7 @@ public class King : PieceLogic
 
         while (!hitValid && !(xPos > 7 || yPos > 7 || xPos < 0 || yPos < 0))
         {
-            if (pieces[xPos + yPos * 8] != null && pieces[xPos + yPos * 8] != this)
+            if (pieces[xPos + yPos * 8] != null && pieces[xPos + yPos * 8] != this && pieces[xPos + yPos * 8].yBase == yPos)
             {
                 hitValid = true;
                 pieceHit = pieces[xPos + yPos * 8];

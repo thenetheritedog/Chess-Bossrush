@@ -38,24 +38,13 @@ public class BoardLogic : MonoBehaviour
         {
             Instantiate(litSquareInst, transform);
         }
-        King[] kings = FindObjectsByType<King>(FindObjectsSortMode.InstanceID);
-        foreach (King king in kings) 
-        {
-            if (king.black)
-            {
-                blackKing = king;
-            }
-            else
-            {
-                whiteKing = king;
-            }
-        }
+
         upgradeShowDefaultPlace = upgradeShow.transform.position;
         upgradeShow.transform.position = upgradeShowDefaultPlace + Vector3.left * 10;
 
     }
     public bool CheckIfValidMove(int xCord, int yCord, PieceLogic piece)
-    {
+    { 
         upgradeShow.transform.position = upgradeShowDefaultPlace + Vector3.left * 10;
         if (piece != whiteKing)
             whiteKing.ResetKingPos();

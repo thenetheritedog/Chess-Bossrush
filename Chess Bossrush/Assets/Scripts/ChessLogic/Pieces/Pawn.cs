@@ -21,7 +21,7 @@ public class Pawn : PieceLogic
         for (int i = -1; i <= 1; i++)
         {
             Movement(i, moveForward);
-            if (i == 0 && (yBase == 1 || yBase == 6))
+            if (i == 0 && (yBase == 1 || yBase == 6) && boardLogic.boardState[xBase + (yBase + moveForward) * 8] == null)
             {
                 Movement(0, 2 * moveForward);
             }

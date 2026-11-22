@@ -27,19 +27,19 @@ public class InputChess : MonoBehaviour
 
     }
 
-    public void OnJump(InputValue inputVal)
-    {
-        boardLogic.EndGame();
-    }
+    //public void OnJump(InputValue inputVal)
+    //{
+    //    boardLogic.EndGame();
+    //}
 
-    public void OnPrevious(InputValue inputVal)
-    {
-        boardLogic.FlipBoardToFEN();
-    }
+    //public void OnPrevious(InputValue inputVal)
+    //{
+    //    boardLogic.FlipBoardToFEN();
+    //}
 
-    public void OnNext(InputValue inputVal)
-    {
-        boardLogic.FlipBoardToFEN();
-        boardLogic.FlipBoardToFEN();
-    }
+    //public void OnNext(InputValue inputVal)
+    //{
+    //    boardLogic.FlipBoardToFEN();
+    //    boardLogic.FlipBoardToFEN();
+    //}
 }

@@ -9,7 +9,7 @@ public class PieceLogic : MonoBehaviour
     public int xBase;
     public int yBase;
 
-    void Start()
+    protected virtual void Start()
     {
 
         boardLogic = FindAnyObjectByType<BoardLogic>();

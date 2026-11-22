@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 vel = playerMan.anim.animator.deltaPosition /Time.deltaTime;
                 vel = Vector3.ProjectOnPlane(vel, groundHit.normal).normalized * vel.magnitude;
+                rb.linearVelocity = vel;
                 return;
             }
             if (dirOfPlayerInput.magnitude > 0)
