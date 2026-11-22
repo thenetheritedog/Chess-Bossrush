@@ -62,7 +62,8 @@ public class PieceLogic : MonoBehaviour
         xBase = (int)pos.x + 4;
         yBase = (int)pos.z + 4;
         if (boardLogic.boardState[xBase + yBase * 8] != null)
-            Destroy(boardLogic.boardState[xBase + yBase * 8].gameObject);
+            if (this is Pawn || boardLogic.boardState[xBase + yBase * 8].yBase == yBase)
+                Destroy(boardLogic.boardState[xBase + yBase * 8].gameObject);
         boardLogic.boardState[xBase + yBase * 8] = this;
         transform.position = boardLogic.transform.GetChild(xBase + yBase * 8).position;
     }

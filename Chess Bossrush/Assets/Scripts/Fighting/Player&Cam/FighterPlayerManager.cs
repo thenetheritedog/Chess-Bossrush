@@ -14,7 +14,7 @@ public class FighterPlayerManager : MonoBehaviour
         Application.targetFrameRate = 60;
         cam = FindAnyObjectByType<CameraManager>();
         move = GetComponent<PlayerMovement>();
-        anim = transform.GetChild(0).GetComponent<AnimationManager>();
+        anim = GetComponent<AnimationManager>();
     }
 
     // Update is called once per frame

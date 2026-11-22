@@ -14,10 +14,26 @@ public class ChessPlayerScript : MonoBehaviour
         {
             if (hit.collider.GetComponent<PieceLogic>() != null)
             {
-                if (pieceUsing != hit.collider.GetComponent<PieceLogic>())
+                PieceLogic hitPiece = hit.collider.GetComponent<PieceLogic>();
+                
+                if (pieceUsing != hitPiece && hitPiece.black == board.blackTurn)
                 {
-                    pieceUsing = hit.collider.GetComponent<PieceLogic>();
+                    pieceUsing = hitPiece;
                     pieceUsing.UsePiece();
+                }
+                else if (pieceUsing != null)
+                {
+                    if (hitPiece.black != pieceUsing.black)
+                    {
+                        board.MovePiece(pieceUsing, hit.point);
+                        pieceUsing = null;
+                        board.RemoveAllLitUpSquares();
+                    }
+                    else
+                    {
+                        pieceUsing = null;
+                        board.RemoveAllLitUpSquares();
+                    }
                 }
                 else 
                 { 

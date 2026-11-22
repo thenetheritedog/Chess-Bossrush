@@ -19,10 +19,12 @@ public class AnimationManager : MonoBehaviour
             return;
         animator.Play(animation);
         rootAnimPlaying = root;
+        animator.applyRootMotion = root;
     }
 
     public void RemoveRootMotion()
     {
         rootAnimPlaying = false;
+        animator.applyRootMotion = false;
     }
 }

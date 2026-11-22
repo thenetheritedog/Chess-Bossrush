@@ -15,13 +15,14 @@ public class BoardLogic : MonoBehaviour
 
     public King whiteKing;
     public King blackKing;
+    public bool blackTurn {get; private set;} = false;
 
     [SerializeField] GameObject litSquareInst;
     [SerializeField] GameObject upgradeShow;
     [SerializeField] Canvas endGameScreen;
     [SerializeField] TextMeshProUGUI winText;
 
-    bool blackTurn = false;
+    
     bool checkForLegalMoves;
 
     int xUpgrade;
