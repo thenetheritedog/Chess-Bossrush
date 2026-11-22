@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour
+public class ChessPlayerScript : MonoBehaviour
 {
     [SerializeField] PieceLogic pieceUsing;
     [SerializeField] BoardLogic board;

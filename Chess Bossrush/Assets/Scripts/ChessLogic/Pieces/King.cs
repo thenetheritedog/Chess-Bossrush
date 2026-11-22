@@ -145,6 +145,7 @@ public class King : PieceLogic
             else
                 boardLogic.boardState[7 + yBase * 8].UpdatePos(new Vector3(1, 0, yBase - 4));
         }
+        hasMoved = true;
     }
 
     public override bool CanCheck(int xMove, int yMove, bool oneAway, bool blackPiece)

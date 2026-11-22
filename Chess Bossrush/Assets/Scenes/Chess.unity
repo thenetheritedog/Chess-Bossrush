@@ -2037,9 +2037,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 877997373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14a772899903a5b4fba025516ff0913b, type: 3}
+  m_Script: {fileID: 11500000, guid: aafcfd2c02a18924783213d3c3f21c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pieceUsing: {fileID: 0}
+  board: {fileID: 1781529982}
+  mousePos: {x: 0, y: 0}
 --- !u!114 &877997376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2079,12 +2082,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 877997373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f23b6e6f263768b40ba709c54b6bc396, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c27ab86f9e187941846b541f4504893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceUsing: {fileID: 0}
-  board: {fileID: 1781529982}
-  mousePos: {x: 0, y: 0}
 --- !u!1001 &1002459613
 PrefabInstance:
   m_ObjectHideFlags: 0

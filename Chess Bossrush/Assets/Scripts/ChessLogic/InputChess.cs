@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Input : MonoBehaviour
+public class InputChess : MonoBehaviour
 {
 
-    PlayerScript player;
+    ChessPlayerScript player;
     BoardLogic boardLogic;
     void Start()
     {
-        player = GetComponent<PlayerScript>();
+        player = GetComponent<ChessPlayerScript>();
         boardLogic = FindAnyObjectByType<BoardLogic>();
     }
 
