@@ -9,15 +9,22 @@ Chessboxing game where you fight more and more intense opponents. Fighting invol
 Has chess board finished (Hopefully), has a WIP title screen and a movement test scene where you can attack.
 # Later
 Will add a chess bot and a enemy
+
 Will add progression
+
 Will add timer
+
 # History
 Started by me as a passion project after my first attempt at a combat game failed. Inspired by Gotham chess thumbnails and the idea of creating a game so insane that it is really funny. Will probably continue this for at least a few weeks.
 # Concerns
 Me giving up after a road block
+
 Me not having enough free time to finish
+
 Won't know how to make chess bot
+
 Any ideas that I have are too much
+
 # How to run
 Go to releases unzip and download the file. Once there execute the EXE file to play! Controls in main menu of game
 
