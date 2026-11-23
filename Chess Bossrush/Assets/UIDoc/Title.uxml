@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIDoc/Stylesheet.uss?fileID=7433441132597879392&amp;guid=51bb85bde2cbe894e9dc2cb680bff215&amp;type=3#Stylesheet" />
+    <ui:VisualElement name="ROOT" style="flex-grow: 1; flex-direction: row; background-color: rgb(47, 48, 55);">
+        <ui:VisualElement style="flex-grow: 1; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+            <ui:Label text="Chess IS that serious" name="Title" class="label" style="-unity-font-definition: url(&quot;project://database/Assets/UIDoc/fonts/Notable/Notable-Regular.ttf?fileID=12800000&amp;guid=4324eb6858c22b641b03a78fa9e55506&amp;type=3#Notable-Regular&quot;); margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%;" />
+            <ui:Label text="this is a WIP for a chess and soulslike combat game, use ESC to return to this menu&#10;Use WASD, left click, shift and jump in the fighting section to try out the controls&#10;Use left click to play chess by clicking on pieces" name="Description" class="label" style="-unity-font-definition: url(&quot;project://database/Assets/UIDoc/fonts/Notable/Notable-Regular.ttf?fileID=12800000&amp;guid=4324eb6858c22b641b03a78fa9e55506&amp;type=3#Notable-Regular&quot;); margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; font-size: 52px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-grow: 1; justify-content: flex-start; align-self: stretch; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Button text="Fighting Test" name="Fight" class="button label" />
+            <ui:Button text="Chess" name="Chess" class="button label" style="margin-top: 32px; margin-right: 32px; margin-bottom: 32px; margin-left: 32px;" />
+            <ui:Button text="Quit" name="Quit" class="button label" style="margin-top: 32px; margin-right: 32px; margin-bottom: 32px; margin-left: 32px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

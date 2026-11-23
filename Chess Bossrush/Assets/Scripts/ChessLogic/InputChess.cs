@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputChess : MonoBehaviour
 {
@@ -25,6 +26,11 @@ public class InputChess : MonoBehaviour
         if (inputVal.Get<float>() > 0.5f)
             player.FindPiece();
 
+    }
+
+    public void OnMenu(InputValue inputVal)
+    {
+        SceneManager.LoadScene(0);
     }
 
     //public void OnJump(InputValue inputVal)

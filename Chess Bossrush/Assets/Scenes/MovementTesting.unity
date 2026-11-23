@@ -320,7 +320,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a78c3ea090c3a7a43a434956d691201b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,45 +365,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &597977423 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7224786236282284686, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-  m_PrefabInstance: {fileID: 1247123429546182999}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &597977431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 597977423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba5a4067c97bc024481b57df69d13481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!95 &597977432
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 597977423}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 3ac4964e9e392914192885ab2548103d, type: 3}
-  m_Controller: {fileID: 9100000, guid: c8405251be8aba441b21abc187f7950f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1035993763
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,7 +850,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a78c3ea090c3a7a43a434956d691201b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -942,26 +903,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1324829432368572928, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-      propertyPath: dodgeCurve.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1324829432368572928, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-      propertyPath: dodgeCurve.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1324829432368572928, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-      propertyPath: dodgeCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1324829432368572928, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-      propertyPath: dodgeCurve.m_Curve.Array.data[0].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1324829432368572928, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-      propertyPath: dodgeCurve.m_Curve.Array.data[0].outSlope
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4897398252100387995, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1006,18 +947,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1909430145425585712, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-    - {fileID: 6752561954926488588, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7224786236282284686, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 597977432}
-    - targetCorrespondingSourceObject: {fileID: 7224786236282284686, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 597977431}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbb9e63f10d88c04983a72809f43dc3b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

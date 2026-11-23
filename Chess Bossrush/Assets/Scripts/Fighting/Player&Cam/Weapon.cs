@@ -4,20 +4,21 @@ public class Weapon : MonoBehaviour
 {
     FighterPlayerManager player;
     Collider attackCollider;
+
+    ParticleSystem hitParticle;
     void Start()
     {
         player = FindAnyObjectByType<FighterPlayerManager>();
         attackCollider = GetComponent<Collider>();
-        TurnOffCollider();
+        hitParticle = GetComponent<ParticleSystem>();
+        player.weapon = this;
+
     }
 
-    public void TurnOnCollider() 
-    {
-        attackCollider.enabled = true;
-    }
+    
 
-    public void TurnOffCollider()
+    private void OnTriggerEnter(Collider other)
     {
-        attackCollider.enabled = false;
+        hitParticle.Emit(20);
     }
 }

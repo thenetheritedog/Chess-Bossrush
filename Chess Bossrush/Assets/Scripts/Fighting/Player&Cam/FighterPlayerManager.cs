@@ -17,8 +17,14 @@ public class FighterPlayerManager : MonoBehaviour
         anim = GetComponent<AnimationManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void TurnOnCollider()
     {
+        weapon.GetComponent<Collider>().enabled = true;
+    }
+
+    public void TurnOffCollider()
+    {
+        weapon.GetComponent<Collider>().enabled = false;
     }
 }

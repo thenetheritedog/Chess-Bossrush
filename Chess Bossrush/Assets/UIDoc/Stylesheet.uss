@@ -1,0 +1,48 @@
+.label {
+    font-size: 96px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    text-overflow: ellipsis;
+    -unity-text-align: upper-center;
+    white-space: pre-wrap;
+    border-top-width: 19px;
+    border-right-width: 19px;
+    border-bottom-width: 19px;
+    border-left-width: 19px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-left-color: rgb(81, 88, 108);
+    border-right-color: rgb(81, 88, 108);
+    border-top-color: rgb(81, 88, 108);
+    border-bottom-color: rgb(81, 88, 108);
+    -unity-font-definition: url("project://database/Assets/UIDoc/fonts/Notable/Notable-Regular.ttf?fileID=12800000&guid=4324eb6858c22b641b03a78fa9e55506&type=3#Notable-Regular");
+}
+
+.button {
+    margin-top: 27px;
+    margin-right: 27px;
+    margin-bottom: 27px;
+    margin-left: 27px;
+    flex-grow: 1;
+    justify-content: flex-start;
+    align-self: stretch;
+    align-content: flex-start;
+    align-items: stretch;
+    max-width: none;
+    max-height: 100%;
+    flex-shrink: 0;
+    flex-basis: 0%;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 99, 0);
+    font-size: 79px;
+}
+
+.button :hover {
+    translate: 0 -17px;
+    rotate: 5deg;
+    scale: 1.1 1.1;
+    transition-duration: 0.2s;
+}

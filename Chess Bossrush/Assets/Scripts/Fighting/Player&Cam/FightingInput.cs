@@ -1,16 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class FightingInput : MonoBehaviour
 {
-    CameraManager cameraManager;
+
     FighterPlayerManager playerManager;
-    PlayerMovement playerMovement;
     void Start()
     {
         playerManager = GetComponent<FighterPlayerManager>();
-        playerMovement = playerManager.move;
-        cameraManager = playerManager.cam;
+
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -33,11 +32,18 @@ public class FightingInput : MonoBehaviour
 
     public void OnAttack(InputValue inputVal)
     {
-        playerManager.anim.AnimationPlay("attack1",true);
+        if (playerManager.move.grounded)
+            playerManager.anim.AnimationPlay("attack1",true);
     }
 
     public void OnSprint(InputValue inputVal)
     {
-        playerManager.anim.AnimationPlay("dodge", true);
+        if (playerManager.move.grounded)
+            playerManager.anim.AnimationPlay("dodge", true);
+    }
+
+    public void OnMenu(InputValue inputVal)
+    {
+        SceneManager.LoadScene(0);
     }
 }
