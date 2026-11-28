@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -22,7 +24,8 @@ public class Enemy : MonoBehaviour
     float speed;
 
     bool rootAnimPlaying;
-    [SerializeField] bool grounded;
+    bool grounded;
+    bool inRangeOfAttack;
 
     Vector3 whatIsTheNextPoint;
 
@@ -36,7 +39,8 @@ public class Enemy : MonoBehaviour
         Attacking,
         DashAttacking,
         SlowlyWalkingUp,
-        Run
+        Run,
+        Block
     }
 
     public State currentState;
@@ -55,7 +59,7 @@ public class Enemy : MonoBehaviour
     void FixedUpdate()
     {
         grounded = GroundCheck();
-
+        
         agent.nextPosition = transform.position;
 
         if (!agent.pathPending)
@@ -66,13 +70,17 @@ public class Enemy : MonoBehaviour
         {
             rb.linearVelocity += Physics.gravity * Time.deltaTime;
         }
-        else if ((transform.position - player.transform.position).magnitude < distanceUntilHit)
+        else if ((transform.position - player.transform.position).magnitude < distanceUntilHit * 
+            (currentState != State.Run ? 1f : 2f) && !inRangeOfAttack)
         {
-            currentState = State.Attacking;
+            inRangeOfAttack = true;
+            StartCoroutine(inRangeOfPlayer());
         }
         else if (!rootAnimPlaying)
         {
             SwitchStates();
+            if (currentState != State.Block)
+                animator.SetBool("blocking", false);
         }
 
         UsingStates();
@@ -81,9 +89,12 @@ public class Enemy : MonoBehaviour
 
     void AttackPlayer()
     {
-        animator.Play("attack1", 0);
-        animator.applyRootMotion = true;
-        rootAnimPlaying = true;
+        if (!rootAnimPlaying)
+        {
+            animator.Play("attack1", 0);
+            animator.applyRootMotion = true;
+            rootAnimPlaying = true;
+        }
         transform.forward = player.transform.position - transform.position;
         rb.linearVelocity = animator.deltaPosition / Time.deltaTime;
         rb.linearVelocity = rb.linearVelocity.magnitude * Vector3.ProjectOnPlane(rb.linearVelocity, groundHit.normal).normalized;
@@ -91,11 +102,11 @@ public class Enemy : MonoBehaviour
 
     void MoveToPoint()
     {
-        if (grounded)
+        if (grounded && animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f)
         {
             rb.linearVelocity += agent.desiredVelocity.normalized * Time.deltaTime * speed;
             rb.linearVelocity -= rb.linearVelocity * Time.deltaTime * friction;
-            transform.forward = player.transform.position - transform.position;
+            transform.forward = Vector3.MoveTowards(transform.forward, (player.transform.position - transform.position).normalized, 5f * Time.deltaTime);
             animator.SetFloat("speedZ", Vector3.Dot(rb.linearVelocity, transform.forward));
             animator.SetFloat("speedX", Vector3.Dot(rb.linearVelocity, transform.right));
         }
@@ -103,12 +114,12 @@ public class Enemy : MonoBehaviour
 
     public void TurnOnCollider()
     {
-        hitBox.GetComponent<Collider>().enabled = true;
+        hitBox.enabled = true;
     }
 
     public void TurnOffCollider()
     {
-        hitBox.GetComponent<Collider>().enabled = false;
+        hitBox.enabled = false;
     }
 
     public void RemoveRootMotion()
@@ -133,9 +144,15 @@ public class Enemy : MonoBehaviour
     {
         if (other.GetComponent<Weapon>() != null)
         {
-            health -= other.GetComponent<Weapon>().damageDealt;
+            health -= currentState != State.Block ? other.GetComponent<Weapon>().damageDealt: other.GetComponent<Weapon>().damageDealt/4;
+            player.gameUI.SetEnemyHealth(health/healthMax);
             if (health < 0)
-                animator.Play("fall");
+            {
+                animator.Play("death");
+                rootAnimPlaying=true;
+                animator.applyRootMotion=true;
+                StartCoroutine(player.GoBackToMenu());
+            }
         }
     }
 
@@ -146,10 +163,15 @@ public class Enemy : MonoBehaviour
         {
             case FighterPlayerManager.PlayerState.Idle:
             case FighterPlayerManager.PlayerState.SlowWalkUp:
-                currentState = State.SlowlyWalkingUp;
+                if (currentState != State.Run)
+                    currentState = State.SlowlyWalkingUp;
                 break;
             case FighterPlayerManager.PlayerState.AuraFarmWalkHorizontal:
-                currentState = State.MatchTheAura;
+                if (currentState != State.Run)
+                    currentState = State.MatchTheAura;
+                break;
+            case FighterPlayerManager.PlayerState.Attack:
+                currentState = State.Block;
                 break;
             default:
                 currentState = State.Run;
@@ -182,6 +204,31 @@ public class Enemy : MonoBehaviour
                 speed = speedRun;
                 MoveToPoint();
                 break;
+            case State.Block:
+                animator.SetBool("blocking", true);
+                if (!rootAnimPlaying)
+                    animator.Play("block");
+                whatIsTheNextPoint = transform.position;
+                MoveToPoint();
+                break;
         }
     }
+
+    IEnumerator inRangeOfPlayer()
+    {
+        float ranTime = Random.Range(0.1f,1f);
+        if (currentState == State.Run)
+            ranTime = 0f;
+        yield return new WaitForSeconds(ranTime);
+        if (inRangeOfAttack)
+            currentState = State.Attacking;
+        if (ranTime == 0f)
+        {
+            animator.Play("dashAttack");
+            animator.applyRootMotion = true;
+            rootAnimPlaying = true;
+        }
+        inRangeOfAttack = false;
+    }
+    
 }

@@ -32,8 +32,8 @@ public class FightingInput : MonoBehaviour
 
     public void OnAttack(InputValue inputVal)
     {
-        if (playerManager.move.grounded && !playerManager.anim.rootAnimPlaying)
-            playerManager.anim.AnimationPlay("attack1",true);
+        if (playerManager.move.grounded)
+            playerManager.weapon.AttackBehavior();
     }
 
     public void OnSprint(InputValue inputVal)

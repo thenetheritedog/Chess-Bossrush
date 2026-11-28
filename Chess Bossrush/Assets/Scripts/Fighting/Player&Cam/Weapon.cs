@@ -6,10 +6,13 @@ public class Weapon : MonoBehaviour
 {
     public float damageDealt;
 
+    public ParticleSystem parryParticle;
+
     FighterPlayerManager player;
     Collider attackCollider;
 
     ParticleSystem hitParticle;
+    
 
     void Start()
     {
@@ -21,7 +24,8 @@ public class Weapon : MonoBehaviour
 
     public void Parry(bool hold)
     {
-        if (hold)
+
+        if (hold && player.move.grounded && !player.anim.rootAnimPlaying)
         {
             StopAllCoroutines();
             player.state = FighterPlayerManager.PlayerState.Parry;
@@ -46,4 +50,26 @@ public class Weapon : MonoBehaviour
         yield return new WaitForSeconds(1f);
         player.anim.animator.SetFloat("parryAmount", -0.2f);
     }
+
+    public void AttackBehavior()
+    {
+        StopAllCoroutines();
+        if (player.state == FighterPlayerManager.PlayerState.Running)
+            player.anim.AnimationPlay("dashAttack", true);
+        else if (player.state != FighterPlayerManager.PlayerState.Attack && !player.anim.rootAnimPlaying)
+            player.anim.AnimationPlay("attack1", true);
+        else
+            StartCoroutine(AttackForNextAnimation());
+        player.state = FighterPlayerManager.PlayerState.Attack;
+        ;
+
+    }
+
+    IEnumerator AttackForNextAnimation()
+    {
+        player.anim.animator.SetBool("attacks", true);
+        yield return new WaitForSeconds(1f);
+        player.anim.animator.SetBool("attacks", false);
+    }
+
 }

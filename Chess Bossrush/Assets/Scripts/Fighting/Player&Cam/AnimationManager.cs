@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
@@ -12,6 +13,8 @@ public class AnimationManager : MonoBehaviour
     {
         player = GetComponent<FighterPlayerManager>();
         animator = GetComponent<Animator>();
+        rootAnimPlaying = false;
+        animator.applyRootMotion = false;
     }
 
     private void Update()
@@ -20,8 +23,6 @@ public class AnimationManager : MonoBehaviour
     }
     public void AnimationPlay(string animation, bool root = false)
     {
-        if (rootAnimPlaying)
-            return;
         animator.Play(animation);
         rootAnimPlaying = root;
         animator.applyRootMotion = root;
@@ -32,5 +33,6 @@ public class AnimationManager : MonoBehaviour
         rootAnimPlaying = false;
         animator.applyRootMotion = false;
     }
+
 
 }
