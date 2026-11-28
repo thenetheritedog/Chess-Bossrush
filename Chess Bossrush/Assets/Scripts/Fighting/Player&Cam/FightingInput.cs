@@ -32,18 +32,27 @@ public class FightingInput : MonoBehaviour
 
     public void OnAttack(InputValue inputVal)
     {
-        if (playerManager.move.grounded)
+        if (playerManager.move.grounded && !playerManager.anim.rootAnimPlaying)
             playerManager.anim.AnimationPlay("attack1",true);
     }
 
     public void OnSprint(InputValue inputVal)
     {
-        if (playerManager.move.grounded)
-            playerManager.anim.AnimationPlay("dodge", true);
+        playerManager.move.Sprint(inputVal.Get<float>() > 0.5f);
     }
 
     public void OnMenu(InputValue inputVal)
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void OnLockOn(InputValue inputVal)
+    {
+        playerManager.cam.SetUpLockOn();
+    }
+
+    public void OnBlock(InputValue inputVal)
+    {
+        playerManager.weapon.Parry(inputVal.Get<float>() > 0.5f);
     }
 }

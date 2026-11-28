@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float acceleration;
+    [SerializeField] float accelerationWalk;
+    [SerializeField] float accelerationRun;
     [SerializeField] float friction;
     [SerializeField] LayerMask defaultMask;
 
@@ -16,10 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     GameObject playerModel;
 
-    float dodgeTimer;
-
-    
-    bool isDodging;
+    float acceleration;
 
     Vector2 moveInput;
 
@@ -33,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         playerMan = GetComponent<FighterPlayerManager>();
         rb = GetComponent<Rigidbody>();
         playerModel = transform.GetChild(0).gameObject;
+        acceleration = accelerationWalk;
         //cam = playerMan.cam;
 
     }
@@ -40,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-
         grounded = GroundCheck();
 
         Movement();
@@ -59,7 +57,6 @@ public class PlayerMovement : MonoBehaviour
                 
                 vel = Vector3.ProjectOnPlane(vel, groundHit.normal).normalized * vel.magnitude;
                 rb.linearVelocity = vel;
-                transform.forward = Vector3.ProjectOnPlane(transform.forward,groundHit.normal).normalized;
                 //playerMan.anim.transform.localPosition = Vector3.zero;
                 return;
             }
@@ -71,23 +68,40 @@ public class PlayerMovement : MonoBehaviour
             
             if (vel.magnitude < 1 && dirOfPlayerInput.magnitude == 0)
             {
-                transform.forward = Vector3.ProjectOnPlane(transform.forward,groundHit.normal).normalized;
                 vel *= 0;
             }
             else
             {
-                transform.forward = vel.normalized;
+                
+                if (acceleration == accelerationRun)
+                    playerMan.state = FighterPlayerManager.PlayerState.Running;
             }
-            playerMan.anim.animator.SetFloat("speed", vel.magnitude); 
+            playerMan.anim.animator.SetFloat("speedZ", Vector3.Dot(vel,transform.forward));
+            playerMan.anim.animator.SetFloat("speedX", Vector3.Dot(vel, transform.right));
         }
         else
         {
             vel += Physics.gravity * Time.deltaTime;
-            transform.forward = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
             playerMan.anim.animator.SetFloat("yVel", vel.y);
         }
         rb.linearVelocity = vel;
-        
+        if (Mathf.Abs(moveInput.y) < 0.25f && acceleration <= accelerationWalk && playerMan.cam.lockingOn)
+            playerMan.state = FighterPlayerManager.PlayerState.AuraFarmWalkHorizontal;
+        else if (acceleration <= accelerationWalk)
+            playerMan.state = FighterPlayerManager.PlayerState.SlowWalkUp;
+        if (moveInput.magnitude == 0)
+            playerMan.state = FighterPlayerManager.PlayerState.Idle;
+
+        if (!playerMan.cam.lockingOn || playerMan.state == FighterPlayerManager.PlayerState.Running || playerMan.anim.rootAnimPlaying)
+        {
+            playerMan.anim.animator.SetFloat("speedZ", vel.magnitude);
+            playerMan.anim.animator.SetFloat("speedX", 0);
+            if (vel.magnitude != 0)
+                transform.forward = Vector3.ProjectOnPlane(vel, Vector3.up).normalized;
+        }
+        else 
+            transform.forward = Vector3.ProjectOnPlane(playerMan.cam.transform.forward, Vector3.up).normalized;
+
     }
 
     bool GroundCheck()
@@ -106,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
     public void UpdateMovementVal(Vector2 moveInputUpd)
     {
         moveInput = moveInputUpd;
+        
     }
 
     public void Jump()
@@ -115,6 +130,22 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity += Vector3.up * 5f;
             grounded = false;
         }
+    }
+
+    public void Sprint(bool isHolding)
+    {
+        if (isHolding && acceleration != accelerationRun && !playerMan.anim.rootAnimPlaying)
+        {
+            playerMan.anim.AnimationPlay("dodge", true);
+            Vector3 lookDir = moveInput.y * Vector3.ProjectOnPlane(playerMan.cam.transform.forward, Vector3.up).normalized;
+            lookDir += moveInput.x * Vector3.ProjectOnPlane(playerMan.cam.transform.right, Vector3.up).normalized;
+            if (lookDir.magnitude == 0)
+                lookDir = transform.forward;
+            transform.forward = lookDir;
+            playerMan.state = FighterPlayerManager.PlayerState.Dodge;
+        }
+        acceleration = isHolding ? accelerationRun : accelerationWalk;
+        
     }
 
 }

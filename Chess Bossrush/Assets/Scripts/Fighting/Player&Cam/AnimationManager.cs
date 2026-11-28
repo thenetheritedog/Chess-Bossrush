@@ -32,4 +32,5 @@ public class AnimationManager : MonoBehaviour
         rootAnimPlaying = false;
         animator.applyRootMotion = false;
     }
+
 }
