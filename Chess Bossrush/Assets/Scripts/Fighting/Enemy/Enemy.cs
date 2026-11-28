@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -59,7 +60,7 @@ public class Enemy : MonoBehaviour
     void FixedUpdate()
     {
         grounded = GroundCheck();
-        
+
         agent.nextPosition = transform.position;
 
         if (!agent.pathPending)
@@ -70,7 +71,7 @@ public class Enemy : MonoBehaviour
         {
             rb.linearVelocity += Physics.gravity * Time.deltaTime;
         }
-        else if ((transform.position - player.transform.position).magnitude < distanceUntilHit * 
+        else if ((transform.position - player.transform.position).magnitude < distanceUntilHit *
             (currentState != State.Run ? 1f : 2f) && !inRangeOfAttack)
         {
             inRangeOfAttack = true;
@@ -102,7 +103,7 @@ public class Enemy : MonoBehaviour
 
     void MoveToPoint()
     {
-        if (grounded && animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f)
+        if (grounded)
         {
             rb.linearVelocity += agent.desiredVelocity.normalized * Time.deltaTime * speed;
             rb.linearVelocity -= rb.linearVelocity * Time.deltaTime * friction;

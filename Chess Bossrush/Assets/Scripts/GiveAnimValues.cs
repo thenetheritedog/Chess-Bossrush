@@ -9,6 +9,8 @@ public class GiveAnimValues : StateMachineBehaviour
         if (animator.GetComponent<Enemy>() != null)
             animator.GetComponent<Enemy>().RemoveRootMotion();
 
+        animator.SetBool("attacks", false);
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
